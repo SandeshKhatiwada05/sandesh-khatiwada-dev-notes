@@ -35,15 +35,19 @@ const ThemeManager = (() => {
         if (!btn) return;
         
         const theme = getStoredTheme();
-        if (theme === LIGHT) {
-            btn.textContent = '🌙';
-            btn.setAttribute('aria-label', 'Switch to dark mode');
-        } else if (theme === DARK) {
-            btn.textContent = '☀️';
-            btn.setAttribute('aria-label', 'Switch to light mode');
-        } else {
-            btn.textContent = '🔄';
-            btn.setAttribute('aria-label', 'Using system theme');
+        const icon = btn.querySelector('.theme-icon');
+        
+        if (icon) {
+            if (theme === LIGHT) {
+                icon.classList.remove('rotate');
+                btn.setAttribute('aria-label', 'Switch to dark mode');
+            } else if (theme === DARK) {
+                icon.classList.add('rotate');
+                btn.setAttribute('aria-label', 'Switch to light mode');
+            } else {
+                icon.classList.remove('rotate');
+                btn.setAttribute('aria-label', 'Using system theme');
+            }
         }
     };
 
