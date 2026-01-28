@@ -330,6 +330,87 @@ const PageNavigation = (() => {
     return { init };
 })();
 
+/* Game Controls Module */
+const GameControls = (() => {
+    const muteGame = (button) => {
+        const isMuted = button.getAttribute('data-muted') === 'true';
+        if (isMuted) {
+            button.textContent = '🔊 Mute';
+            button.setAttribute('data-muted', 'false');
+        } else {
+            button.textContent = '🔇 Unmute';
+            button.setAttribute('data-muted', 'true');
+        }
+    };
+
+    const toggleFullScreen = (button) => {
+        const gameCard = button.closest('.game-card');
+        const isFullscreen = document.fullscreenElement === gameCard;
+        
+        if (!isFullscreen) {
+            gameCard.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                alert('Fullscreen not supported. Try using browser fullscreen (F11).');
+            });
+            button.textContent = '⛶ Exit Full Screen';
+            button.setAttribute('data-fullscreen', 'true');
+        } else {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+            button.textContent = '⛶ Full Screen';
+            button.setAttribute('data-fullscreen', 'false');
+        }
+    };
+
+    const closeGame = (button) => {
+        const gameCard = button.closest('.game-card');
+        if (gameCard) {
+            gameCard.style.animation = 'fadeOut 300ms ease-out forwards';
+            setTimeout(() => {
+                gameCard.remove();
+            }, 300);
+        }
+    };
+
+    const init = () => {
+        // Add CSS for fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: scale(0.95);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Expose functions globally for inline onclick handlers
+        window.muteGame = muteGame;
+        window.toggleFullScreen = toggleFullScreen;
+        window.closeGame = closeGame;
+        
+        // Handle fullscreen changes
+        document.addEventListener('fullscreenchange', () => {
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                const btn = card.querySelector('.fullscreen-btn');
+                if (btn && document.fullscreenElement !== card) {
+                    btn.textContent = '⛶ Full Screen';
+                    btn.setAttribute('data-fullscreen', 'false');
+                }
+            });
+        });
+    };
+
+    return { init };
+})();
+
 /* Module Manager */
 const ModuleManager = (() => {
     const init = () => {
@@ -339,6 +420,7 @@ const ModuleManager = (() => {
         CVModal.init();
         RecommendationEngine.init();
         PageNavigation.init();
+        GameControls.init();
     };
 
     return { init };
