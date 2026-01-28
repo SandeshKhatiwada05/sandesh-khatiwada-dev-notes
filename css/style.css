@@ -85,6 +85,30 @@ body {
     color: var(--color-text-primary);
     line-height: 1.6;
     font-size: var(--font-size-base);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Light theme background */
+body.light-theme::before {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 168, 107, 0.02) 0%, transparent 50%);
 }
 
 /* ========================================
@@ -158,7 +182,7 @@ pre code {
 }
 
 /* ========================================
-   NAVIGATION BAR
+   NAVIGATION BAR - REFINED
    ======================================== */
 
 .navbar {
@@ -167,14 +191,15 @@ pre code {
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: var(--spacing-md) 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem var(--spacing-lg);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    background-color: rgba(26, 31, 38, 0.95);
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,42 +208,71 @@ pre code {
 }
 
 .nav-brand {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--color-accent-primary);
-    letter-spacing: -0.5px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
     font-family: var(--font-family-heading);
+    min-width: 45px;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: var(--spacing-lg);
+    gap: 0.5rem;
     align-items: center;
+    flex: 1;
+    justify-content: center;
 }
 
 .nav-link {
     color: var(--color-text-secondary);
     font-weight: 500;
-    transition: color var(--transition-fast);
+    transition: all var(--transition-fast);
     position: relative;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.4rem;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+    color: var(--color-accent-primary);
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
 .nav-link.active {
     color: var(--color-accent-primary);
+    background-color: rgba(59, 130, 246, 0.15);
 }
 
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--color-accent-primary);
-    border-radius: 2px;
+/* ========================================
+   HEADER SECTION - REDESIGNED
+   ======================================== */
+
+.header {
+    text-align: center;
+    padding: 3rem var(--spacing-lg) 2rem;
+}
+
+.header-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.5px;
+    margin: 0;
+    font-weight: 500;
 }
 
 /* ========================================
@@ -358,25 +412,47 @@ pre code {
 }
 
 /* ========================================
-   HERO SECTION
+   HERO SECTION - REDESIGNED
    ======================================== */
 
 .hero {
     background-color: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    padding: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
+    border-radius: 1rem;
+    padding: 3rem var(--spacing-lg);
+    margin: var(--spacing-xl) var(--spacing-lg);
     line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 0% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero h2 {
     color: var(--color-accent-primary);
     margin-bottom: var(--spacing-lg);
+    font-size: 1.8rem;
 }
 
 .hero p {
     margin-bottom: var(--spacing-md);
+    line-height: 1.8;
 }
 
 .hero p:last-child {
@@ -384,12 +460,12 @@ pre code {
 }
 
 /* ========================================
-   CARD-BASED LAYOUT
+   CARD-BASED LAYOUT - ENHANCED
    ======================================== */
 
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
 }
@@ -402,22 +478,47 @@ pre code {
     transition: all var(--transition-normal);
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Card animated background on hover */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
 }
 
 .card:hover {
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .card h3 {
     color: var(--color-accent-primary);
     margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
 }
 
 .card p {
     flex-grow: 1;
     margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
 }
 
 .card p:last-child {
@@ -426,32 +527,86 @@ pre code {
 
 .card pre {
     margin: var(--spacing-md) 0 0 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* ========================================
-   QUICK LINKS & CARD LINKS
+   SEARCH & RECOMMENDATIONS
    ======================================== */
 
-.quick-links {
+.search-section {
     margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
 }
 
-.quick-links h2 {
+.search-box {
+    position: relative;
     margin-bottom: var(--spacing-lg);
 }
 
-.card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-main);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
 }
 
-.card-link .card p {
-    color: var(--color-text-secondary);
+.search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.card-link:hover .card h3 {
-    color: var(--color-accent-secondary);
+.search-input::placeholder {
+    color: var(--color-text-tertiary);
+}
+
+.recommendations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.recommendation-card {
+    background-color: var(--color-bg-tertiary);
+    padding: var(--spacing-md);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--color-accent-primary);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.recommendation-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.recommendation-card h4 {
+    color: var(--color-accent-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.recommendation-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.highlight {
+    background-color: rgba(59, 130, 246, 0.3);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.2rem;
+    font-weight: 500;
 }
 
 /* ========================================
@@ -546,7 +701,7 @@ li {
 }
 
 /* ========================================
-   CV MODAL
+   CV MODAL - ENHANCED WITH SEARCH
    ======================================== */
 
 .cv-modal {
@@ -556,11 +711,21 @@ li {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 2000;
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md);
+    animation: fadeIn var(--transition-normal);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .cv-modal.active {
@@ -577,6 +742,18 @@ li {
     display: flex;
     flex-direction: column;
     position: relative;
+    animation: slideUp var(--transition-normal);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .cv-modal-header {
@@ -585,11 +762,35 @@ li {
     align-items: center;
     padding: var(--spacing-lg);
     border-bottom: 1px solid var(--color-border);
+    gap: var(--spacing-md);
 }
 
 .cv-modal-header h2 {
     margin: 0;
     color: var(--color-accent-primary);
+    font-size: 1.5rem;
+}
+
+.cv-search-bar {
+    flex: 1;
+    max-width: 300px;
+}
+
+.cv-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-main);
+    transition: all var(--transition-fast);
+}
+
+.cv-search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .cv-close-btn {
@@ -619,21 +820,35 @@ li {
 
 .cv-download-btn {
     display: inline-block;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     background-color: var(--color-accent-primary);
     color: white;
     border-radius: 0.5rem;
     text-decoration: none;
-    transition: background-color var(--transition-fast);
+    transition: all var(--transition-fast);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .cv-download-btn:hover {
     background-color: var(--color-accent-hover);
+    transform: scale(1.05);
 }
 
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */
+
+@media (max-width: 1024px) {
+    .nav-container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
 
 @media (max-width: 768px) {
     :root {
@@ -644,30 +859,48 @@ li {
     
     .nav-container {
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
     }
     
     .nav-menu {
-        gap: var(--spacing-md);
-        width: 100%;
+        gap: var(--spacing-sm);
         justify-content: center;
+        width: 100%;
     }
 
-    .nav-external-links {
-        width: 100%;
-        justify-content: center;
+    .nav-brand {
+        font-size: 1.25rem;
     }
     
     .header-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
     }
     
     .cards-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
     
     .container {
         padding: var(--spacing-md);
+    }
+
+    .hero {
+        padding: var(--spacing-lg);
+        margin: var(--spacing-lg) 0;
+    }
+    
+    .search-section {
+        padding: var(--spacing-md);
+    }
+
+    .recommendations {
+        grid-template-columns: 1fr;
     }
     
     pre {
@@ -676,27 +909,47 @@ li {
     }
 
     .cv-modal-content {
-        max-width: 95%;
+        max-width: 98%;
+    }
+
+    .cv-modal-header {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+
+    .cv-search-bar {
+        max-width: none;
+        flex: 1;
+        min-width: 200px;
     }
 }
 
 @media (max-width: 480px) {
     .nav-brand {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .nav-menu {
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs);
         font-size: var(--font-size-sm);
     }
 
-    .nav-external-links {
-        gap: var(--spacing-sm);
+    .nav-link {
+        padding: 0.4rem 0.5rem;
         font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.9rem;
     }
     
     .header-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.9rem;
     }
     
     .container {
@@ -704,32 +957,42 @@ li {
     }
     
     .hero {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+    }
+
+    .hero h2 {
+        font-size: 1.4rem;
     }
     
     .card {
         padding: var(--spacing-md);
     }
 
-    .theme-toggle {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.9rem;
+    .search-input {
+        font-size: 1rem;
+        padding: 0.6rem;
     }
 
     .cv-modal-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-md);
+        padding: var(--spacing-md);
     }
 
     .cv-modal-header h2 {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
-    .cv-close-btn {
-        position: absolute;
-        top: var(--spacing-md);
-        right: var(--spacing-md);
+    .cv-search-input {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .recommendation-card {
+        padding: var(--spacing-sm);
+    }
+
+    .section-title {
+        font-size: 1.2rem;
     }
 }
 

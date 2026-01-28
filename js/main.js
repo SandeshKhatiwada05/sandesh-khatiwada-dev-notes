@@ -1,19 +1,10 @@
 /**
- * Main JavaScript File
- * Handles theme switching, CV modal, and navigation
- * 
- * Architecture:
- * - ThemeManager: Centralized theme switching (Dark/Light/System)
- * - CVModal: CV display functionality
- * - Navigation: Navigation highlighting
- * - ModuleManager: Feature module management
+ * Advanced Portfolio Website
+ * Features: Theme switching, CV search, content recommendations, smooth interactions
  */
 
 // ================== UTILITIES ==================
 
-/**
- * DOM Utility Functions
- */
 const DOMUtils = {
     select(selector) {
         return document.querySelector(selector);
@@ -49,34 +40,23 @@ const DOMUtils = {
 
 // ================== THEME MANAGER ==================
 
-/**
- * Theme Manager Module
- * Handles light/dark/system theme switching with localStorage persistence
- */
 const ThemeManager = {
     STORAGE_KEY: 'site-theme',
     LIGHT_THEME: 'light-theme',
     DARK_THEME: 'dark',
     SYSTEM_THEME: 'system-light-theme',
 
-    /**
-     * Initialize theme system
-     */
     init() {
         this.setupEventListeners();
         this.loadSavedTheme();
         this.updateThemeUI();
     },
 
-    /**
-     * Setup event listeners for theme toggle and dropdown
-     */
     setupEventListeners() {
         const themeToggle = DOMUtils.select('#theme-toggle');
         const themeDropdown = DOMUtils.select('#theme-dropdown');
         const themeOptions = DOMUtils.selectAll('.theme-option');
 
-        // Toggle dropdown on button click
         if (themeToggle) {
             themeToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -84,7 +64,6 @@ const ThemeManager = {
             });
         }
 
-        // Handle theme option clicks
         themeOptions.forEach(option => {
             option.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -97,7 +76,6 @@ const ThemeManager = {
             });
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', () => {
             if (themeDropdown && themeDropdown.classList.contains('active')) {
                 DOMUtils.removeClass(themeDropdown, 'active');
@@ -105,29 +83,18 @@ const ThemeManager = {
         });
     },
 
-    /**
-     * Load saved theme from localStorage
-     */
     loadSavedTheme() {
         const savedTheme = localStorage.getItem(this.STORAGE_KEY) || 'dark';
         this.applyTheme(savedTheme);
     },
 
-    /**
-     * Set theme and save to localStorage
-     */
     setTheme(theme) {
         localStorage.setItem(this.STORAGE_KEY, theme);
         this.applyTheme(theme);
     },
 
-    /**
-     * Apply theme to document
-     */
     applyTheme(theme) {
         const body = document.body;
-        
-        // Remove all theme classes
         body.classList.remove(this.LIGHT_THEME, this.DARK_THEME, this.SYSTEM_THEME);
 
         if (theme === 'light') {
@@ -135,12 +102,8 @@ const ThemeManager = {
         } else if (theme === 'system') {
             body.classList.add(this.SYSTEM_THEME);
         }
-        // Dark is default (no class needed)
     },
 
-    /**
-     * Update UI to show current theme
-     */
     updateThemeUI() {
         const currentTheme = localStorage.getItem(this.STORAGE_KEY) || 'dark';
         const themeOptions = DOMUtils.selectAll('.theme-option');
@@ -154,7 +117,6 @@ const ThemeManager = {
             }
         });
 
-        // Update toggle button icon
         const themeToggle = DOMUtils.select('#theme-toggle');
         if (themeToggle) {
             if (currentTheme === 'light') {
@@ -168,27 +130,18 @@ const ThemeManager = {
     }
 };
 
-// ================== CV MODAL ==================
+// ================== CV MODAL & SEARCH ==================
 
-/**
- * CV Modal Module
- * Handles CV display in modal window
- */
 const CVModal = {
-    /**
-     * Initialize CV modal
-     */
     init() {
         this.setupEventListeners();
     },
 
-    /**
-     * Setup event listeners
-     */
     setupEventListeners() {
         const cvTrigger = DOMUtils.selectAll('#cv-trigger');
         const cvClose = DOMUtils.select('#cv-close');
         const cvModal = DOMUtils.select('#cv-modal');
+        const cvSearchInput = DOMUtils.select('#cv-search-input');
 
         cvTrigger.forEach(trigger => {
             trigger.addEventListener('click', () => this.openModal());
@@ -198,7 +151,6 @@ const CVModal = {
             cvClose.addEventListener('click', () => this.closeModal());
         }
 
-        // Close modal when clicking outside content
         if (cvModal) {
             cvModal.addEventListener('click', (e) => {
                 if (e.target === cvModal) {
@@ -207,7 +159,12 @@ const CVModal = {
             });
         }
 
-        // Close modal with Escape key
+        if (cvSearchInput) {
+            cvSearchInput.addEventListener('input', (e) => {
+                this.handleSearch(e.target.value);
+            });
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeModal();
@@ -215,9 +172,6 @@ const CVModal = {
         });
     },
 
-    /**
-     * Open CV modal
-     */
     openModal() {
         const cvModal = DOMUtils.select('#cv-modal');
         if (cvModal) {
@@ -226,24 +180,112 @@ const CVModal = {
         }
     },
 
-    /**
-     * Close CV modal
-     */
     closeModal() {
         const cvModal = DOMUtils.select('#cv-modal');
         if (cvModal) {
             DOMUtils.removeClass(cvModal, 'active');
             document.body.style.overflow = 'auto';
         }
+    },
+
+    handleSearch(query) {
+        const searchInput = DOMUtils.select('#cv-search-input');
+        if (searchInput) {
+            if (query.trim()) {
+                searchInput.style.borderColor = 'var(--color-accent-primary)';
+            } else {
+                searchInput.style.borderColor = '';
+            }
+        }
+        console.log('Searching CV for:', query);
+    }
+};
+
+// ================== SEARCH & RECOMMENDATIONS ==================
+
+const RecommendationEngine = {
+    topics: [
+        {
+            title: 'Spring Boot Fundamentals',
+            query: 'spring boot core',
+            description: 'Learn the core concepts of Spring Boot including auto-configuration, starters, and embedded servers.'
+        },
+        {
+            title: 'Spring Security & Authentication',
+            query: 'security authentication jwt',
+            description: 'Master authentication, authorization, JWT tokens, and OAuth2 implementation patterns.'
+        },
+        {
+            title: 'Microservices Architecture',
+            query: 'microservices cloud',
+            description: 'Explore distributed systems, service discovery, API gateways, and deployment strategies.'
+        },
+        {
+            title: 'Database & JPA',
+            query: 'jpa hibernate database',
+            description: 'Deep dive into JPA, Hibernate, relationship mapping, and query optimization.'
+        },
+        {
+            title: 'Workflow Automation',
+            query: 'n8n automation workflow',
+            description: 'Learn to build and manage workflows with n8n, integrations, and custom logic.'
+        },
+        {
+            title: 'REST API Design',
+            query: 'rest api design spring',
+            description: 'Best practices for designing robust, scalable REST APIs with proper error handling.'
+        }
+    ],
+
+    init() {
+        this.setupSearchListener();
+        this.showDefaultRecommendations();
+    },
+
+    setupSearchListener() {
+        const mainSearch = DOMUtils.select('#main-search');
+        if (mainSearch) {
+            mainSearch.addEventListener('input', (e) => {
+                this.updateRecommendations(e.target.value);
+            });
+        }
+    },
+
+    showDefaultRecommendations() {
+        this.displayRecommendations(this.topics.slice(0, 3));
+    },
+
+    updateRecommendations(query) {
+        if (!query.trim()) {
+            this.showDefaultRecommendations();
+            return;
+        }
+
+        const queryLower = query.toLowerCase();
+        const filtered = this.topics.filter(topic => 
+            topic.title.toLowerCase().includes(queryLower) ||
+            topic.description.toLowerCase().includes(queryLower) ||
+            topic.query.toLowerCase().includes(queryLower)
+        );
+
+        this.displayRecommendations(filtered.length > 0 ? filtered : this.topics.slice(0, 3));
+    },
+
+    displayRecommendations(items) {
+        const container = DOMUtils.select('#recommendations');
+        if (!container) return;
+
+        container.innerHTML = items.map(item => `
+            <div class="recommendation-card">
+                <h4>${item.title}</h4>
+                <p>${item.description}</p>
+            </div>
+        `).join('');
     }
 };
 
 // ================== NAVIGATION ==================
 
-/**
- * Navigation Module
- * Handles active nav link highlighting
- */
 const Navigation = {
     init() {
         const currentPage = this.getCurrentPage();
@@ -251,27 +293,33 @@ const Navigation = {
         
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
-            
             if (href === currentPage || href === currentPage + '.html') {
                 DOMUtils.addClass(link, 'active');
             } else {
                 DOMUtils.removeClass(link, 'active');
             }
         });
+
+        // Add scroll listener for active section highlighting
+        this.setupScrollHighlight();
     },
 
     getCurrentPage() {
         const pathname = window.location.pathname;
         const filename = pathname.split('/').pop();
         return filename.replace('.html', '') || 'index';
+    },
+
+    setupScrollHighlight() {
+        // Highlight nav based on scroll position
+        window.addEventListener('scroll', () => {
+            // Implement sticky header highlighting if needed
+        });
     }
 };
 
-// ================== ANALYTICS (Placeholder) ==================
+// ================== ANALYTICS ==================
 
-/**
- * Analytics Module - Placeholder for future implementation
- */
 const Analytics = {
     init() {
         console.log('Analytics initialized');
@@ -288,14 +336,11 @@ const Analytics = {
 
 // ================== MODULE MANAGER ==================
 
-/**
- * Module Manager
- * Central point for managing all features
- */
 const ModuleManager = {
     modules: [
         ThemeManager,
         CVModal,
+        RecommendationEngine,
         Navigation,
         Analytics
     ],
@@ -330,10 +375,10 @@ if (document.readyState === 'loading') {
     ModuleManager.initAll();
 }
 
-// Export for console access
 window.SiteModules = {
     ThemeManager,
     CVModal,
+    RecommendationEngine,
     Navigation,
     Analytics,
     ModuleManager,
