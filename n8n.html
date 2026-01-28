@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Automation - SANDESH KHATIWADA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">SK</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="spring.html" class="nav-link">Spring Boot</a></li>
+                <li><a href="n8n.html" class="nav-link active">n8n</a></li>
+            </ul>
+            <div class="nav-external-links">
+                <a href="https://github.com/SandeshKhatiwada05" target="_blank" class="external-link github-icon">GitHub</a>
+                <button class="external-link" id="cv-trigger">📄 CV</button>
+                <div class="theme-menu">
+                    <button class="theme-toggle" id="theme-toggle">🌙</button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-option" data-theme="dark">🌙 Dark</button>
+                        <button class="theme-option" data-theme="light">☀️ Light</button>
+                        <button class="theme-option" data-theme="system">⚙️ System</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CV Modal -->
+    <div class="cv-modal" id="cv-modal">
+        <div class="cv-modal-content">
+            <div class="cv-modal-header">
+                <h2>SANDESH KHATIWADA - CV</h2>
+                <button class="cv-close-btn" id="cv-close">&times;</button>
+            </div>
+            <div class="cv-modal-body">
+                <iframe src="Sandesh_CV.pdf" type="application/pdf"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>n8n Workflow Automation</h1>
+            <p class="header-subtitle">Low-Code Integration & Automation Patterns</p>
+        </header>
+
+        <!-- Basics Section -->
+        <section class="content-section">
+            <h2 class="section-title">n8n Fundamentals</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>What is n8n?</h3>
+                    <p>
+                        n8n is an open-source workflow automation platform. It enables non-technical users 
+                        and developers to build integration workflows without complex code. Think of it as 
+                        IFTTT but self-hosted, extensible, and enterprise-ready.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Core Components</h3>
+                    <ul class="compact-list">
+                        <li><strong>Workflow:</strong> Visual representation of automation steps</li>
+                        <li><strong>Nodes:</strong> Individual actions or integrations</li>
+                        <li><strong>Connections:</strong> Data flow between nodes</li>
+                        <li><strong>Triggers:</strong> Webhooks, scheduled events, polls</li>
+                        <li><strong>Credentials:</strong> Secure auth storage for services</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Workflow Types</h3>
+                    <ul class="compact-list">
+                        <li><strong>Trigger-based:</strong> Starts from webhook/schedule</li>
+                        <li><strong>Always-on:</strong> Continuous polling or listening</li>
+                        <li><strong>Manual:</strong> Executed by user interaction</li>
+                        <li><strong>Cron:</strong> Time-based recurring automations</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Key Benefits</h3>
+                    <ul class="compact-list">
+                        <li>No server infrastructure needed (vs custom code)</li>
+                        <li>Visual workflow design reduces errors</li>
+                        <li>Quick integration of 400+ pre-built nodes</li>
+                        <li>Extensible via custom code in JavaScript</li>
+                        <li>Ideal for cross-system synchronization</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Logic Section -->
+        <section class="content-section">
+            <h2 class="section-title">Custom Logic & Extensions</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Custom JavaScript Node</h3>
+                    <p>
+                        Use the Code node to write custom JavaScript for logic that exceeds basic node capabilities. 
+                        Access input data via <code>$input</code>, manipulate it, and return structured output.
+                    </p>
+                    <pre><code>// Example: Transform input data
+const user = $input.all()[0].json;
+return {
+    fullName: `${user.first} ${user.last}`,
+    email: user.email,
+    timestamp: new Date().toISOString()
+};</code></pre>
+                </div>
+                <div class="card">
+                    <h3>HTTP Requests</h3>
+                    <p>
+                        The HTTP node is powerful for calling any REST API. Configure method, URL, headers, 
+                        and body. Use expression language to reference data from previous nodes.
+                    </p>
+                    <pre><code>// Example body with expressions
+{
+    "userId": "{{ $node.SplitData.json.id }}",
+    "action": "update",
+    "timestamp": "{{ $now.toISOString() }}"
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Conditional Logic</h3>
+                    <p>
+                        Use IF nodes to branch workflows. Routes data through different paths based on conditions. 
+                        Combine with Switch nodes for multiple branches. Essential for error handling and data validation.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Error Handling</h3>
+                    <p>
+                        Add error handlers to workflow paths. Prevent cascading failures by catching and logging errors. 
+                        Use Try-Catch pattern: main flow + error handler node that logs or notifies.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Loop Nodes</h3>
+                    <p>
+                        Process collections of data iteratively. For-in loop iterates over arrays. 
+                        Useful for batch operations, syncing multiple records, or building aggregated results.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Data Transformation</h3>
+                    <ul class="compact-list">
+                        <li>Item lists: Filter and sort arrays</li>
+                        <li>Merge: Combine multiple inputs</li>
+                        <li>Set: Rename, add, remove fields</li>
+                        <li>Function: Apply functions to fields</li>
+                        <li>Expression editor: Advanced data mapping</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Patterns Section -->
+        <section class="content-section">
+            <h2 class="section-title">Common Automation Patterns</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Data Sync Pattern</h3>
+                    <p>
+                        Webhook receives data → Transform fields → Query destination database → 
+                        Update existing or create new record → Log result
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Notification Pattern</h3>
+                    <p>
+                        Trigger (form submission, API call) → Extract relevant data → 
+                        Format message → Send via email/Slack/SMS → Log delivery
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Approval Workflow</h3>
+                    <p>
+                        Request received → Store in database → Send approval request → 
+                        Wait for response → Execute action based on decision
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Scheduled Reports</h3>
+                    <p>
+                        Cron trigger on schedule → Query data from multiple sources → 
+                        Transform and aggregate → Format as PDF/CSV → Email to stakeholders
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Multi-System Sync</h3>
+                    <p>
+                        Change in System A → Fetch full context → Transform for System B format → 
+                        Update System B → Log sync event → Alert on conflict
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Webhook Receiver</h3>
+                    <p>
+                        Expose webhook endpoint → Validate request signature → Queue processing → 
+                        Handle async without blocking source system → Return 200 immediately
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="content-section">
+            <h2 class="section-title">Best Practices</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Workflow Design</h3>
+                    <ul class="compact-list">
+                        <li>Use meaningful node names for clarity</li>
+                        <li>Add comments for complex sections</li>
+                        <li>One workflow per integration concern</li>
+                        <li>Use sub-workflows for reusable logic</li>
+                        <li>Keep main flow simple, delegate to sub-workflows</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Error Management</h3>
+                    <ul class="compact-list">
+                        <li>Always add error handlers to critical nodes</li>
+                        <li>Log errors with context for debugging</li>
+                        <li>Implement retry logic with exponential backoff</li>
+                        <li>Set up alerting for workflow failures</li>
+                        <li>Use dead-letter queues for failed records</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Security & Credentials</h3>
+                    <ul class="compact-list">
+                        <li>Never hardcode credentials in workflows</li>
+                        <li>Use n8n's credential system exclusively</li>
+                        <li>Rotate credentials regularly</li>
+                        <li>Use environment variables for configuration</li>
+                        <li>Restrict webhook endpoints with validation</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Performance Optimization</h3>
+                    <ul class="compact-list">
+                        <li>Paginate API requests to avoid timeouts</li>
+                        <li>Filter data early to reduce processing</li>
+                        <li>Use batch operations when available</li>
+                        <li>Implement caching for reference data</li>
+                        <li>Monitor workflow execution times</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Diagram Placeholder -->
+        <section class="content-section">
+            <h2 class="section-title">Workflow Diagram</h2>
+            <div class="diagram-placeholder">
+                <div class="placeholder-content">
+                    <h3>Future Workflow Figure</h3>
+                    <p>
+                        A visual diagram showing a complete end-to-end workflow will be placed here. 
+                        This section is reserved for illustrating a complex automation pattern with all components.
+                    </p>
+                    <p class="placeholder-note">
+                        Example: Data ingestion → Validation → Transformation → Multi-destination sync → Notification
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Nodes Section -->
+        <section class="content-section">
+            <h2 class="section-title">Popular Integrations</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>SaaS & Communication</h3>
+                    <ul class="compact-list">
+                        <li>Gmail, Outlook, SendGrid</li>
+                        <li>Slack, Teams, Discord</li>
+                        <li>Calendars, Typeform, Airtable</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Databases</h3>
+                    <ul class="compact-list">
+                        <li>PostgreSQL, MySQL, MongoDB</li>
+                        <li>Firebase, Supabase</li>
+                        <li>DynamoDB, Elasticsearch</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Developer Tools</h3>
+                    <ul class="compact-list">
+                        <li>GitHub, GitLab, Bitbucket</li>
+                        <li>Jira, Linear, Asana</li>
+                        <li>Docker, AWS, GCP</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Generic Connectors</h3>
+                    <ul class="compact-list">
+                        <li>HTTP requests (any REST API)</li>
+                        <li>Webhooks (receive data)</li>
+                        <li>SFTP, FTP file transfer</li>
+                        <li>Custom code execution</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 SANDESH KHATIWADA. n8n Automation Knowledge Base.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

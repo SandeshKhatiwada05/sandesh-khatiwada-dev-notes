@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot - SANDESH KHATIWADA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">SK</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="spring.html" class="nav-link active">Spring Boot</a></li>
+                <li><a href="n8n.html" class="nav-link">n8n</a></li>
+            </ul>
+            <div class="nav-external-links">
+                <a href="https://github.com/SandeshKhatiwada05" target="_blank" class="external-link github-icon">GitHub</a>
+                <button class="external-link" id="cv-trigger">📄 CV</button>
+                <div class="theme-menu">
+                    <button class="theme-toggle" id="theme-toggle">🌙</button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-option" data-theme="dark">🌙 Dark</button>
+                        <button class="theme-option" data-theme="light">☀️ Light</button>
+                        <button class="theme-option" data-theme="system">⚙️ System</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CV Modal -->
+    <div class="cv-modal" id="cv-modal">
+        <div class="cv-modal-content">
+            <div class="cv-modal-header">
+                <h2>SANDESH KHATIWADA - CV</h2>
+                <button class="cv-close-btn" id="cv-close">&times;</button>
+            </div>
+            <div class="cv-modal-body">
+                <iframe src="Sandesh_CV.pdf" type="application/pdf"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Spring Boot Knowledge Base</h1>
+            <p class="header-subtitle">Enterprise Java Development Patterns & Best Practices</p>
+        </header>
+
+        <!-- Cheat Sheet Section -->
+        <section class="content-section">
+            <h2 class="section-title">Cheat Sheet</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Project Setup</h3>
+                    <pre><code>@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}</code></pre>
+                    <p>Entry point for any Spring Boot application. Auto-configuration handles most setup.</p>
+                </div>
+                <div class="card">
+                    <h3>Common Annotations</h3>
+                    <ul class="compact-list">
+                        <li><code>@RestController</code> - REST endpoint class</li>
+                        <li><code>@Service</code> - Business logic layer</li>
+                        <li><code>@Repository</code> - Data access layer</li>
+                        <li><code>@Autowired</code> - Dependency injection</li>
+                        <li><code>@Configuration</code> - Configuration class</li>
+                        <li><code>@Bean</code> - Define bean programmatically</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>application.yml Structure</h3>
+                    <pre><code>spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db
+    username: root
+    password: pass
+  jpa:
+    hibernate:
+      ddl-auto: update</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Concepts Section -->
+        <section class="content-section">
+            <h2 class="section-title">Core Concepts</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Dependency Injection</h3>
+                    <p>
+                        Spring's IoC container manages object creation and lifecycle. Use constructor injection 
+                        for immutability and testability. Avoid field injection in production code.
+                    </p>
+                    <pre><code>@Service
+public class UserService {
+    private final UserRepository repo;
+    
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Request-Response Cycle</h3>
+                    <p>
+                        Request flows through: Dispatcher Servlet → Interceptors → Controller → Service 
+                        → Repository → Database. Response returns through same stack with formatters applied.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Layered Architecture</h3>
+                    <ul class="compact-list">
+                        <li><strong>Controller:</strong> HTTP request handling</li>
+                        <li><strong>Service:</strong> Business logic & orchestration</li>
+                        <li><strong>Repository:</strong> Data access abstraction</li>
+                        <li><strong>Entity:</strong> Domain model / database mapping</li>
+                        <li><strong>DTO:</strong> Data transfer objects for API</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Application Properties</h3>
+                    <p>
+                        Externalize configuration using <code>application.properties</code> or <code>application.yml</code>. 
+                        Access via <code>@Value</code> or <code>@ConfigurationProperties</code>. 
+                        Supports profiles: application-dev.yml, application-prod.yml.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spring Security Section -->
+        <section class="content-section">
+            <h2 class="section-title">Spring Security</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Security Configuration</h3>
+                    <pre><code>@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(
+            HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/public/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin();
+        return http.build();
+    }
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Key Concepts</h3>
+                    <ul class="compact-list">
+                        <li><strong>Authentication:</strong> Who are you? (verify identity)</li>
+                        <li><strong>Authorization:</strong> What can you do? (check permissions)</li>
+                        <li><strong>Principal:</strong> Currently authenticated user</li>
+                        <li><strong>GrantedAuthority:</strong> Permission/role held by user</li>
+                        <li><strong>SecurityContext:</strong> Holds auth info for current thread</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Password Encoding</h3>
+                    <p>
+                        Always use <code>PasswordEncoder</code>. BCrypt recommended for new projects. 
+                        Never store plain passwords.
+                    </p>
+                    <pre><code>@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Common Patterns</h3>
+                    <ul class="compact-list">
+                        <li>CSRF protection for form submissions</li>
+                        <li>CORS configuration for API access</li>
+                        <li>Role-based access control (RBAC)</li>
+                        <li>Method-level security with <code>@PreAuthorize</code></li>
+                        <li>HTTPS enforcement in production</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- OAuth2 and JWT Section -->
+        <section class="content-section">
+            <h2 class="section-title">OAuth2 & JWT</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>JWT Token Structure</h3>
+                    <p>
+                        JWT contains three parts separated by dots: <code>header.payload.signature</code>
+                    </p>
+                    <ul class="compact-list">
+                        <li><strong>Header:</strong> Token type and hashing algorithm</li>
+                        <li><strong>Payload:</strong> Claims (user info, permissions, exp time)</li>
+                        <li><strong>Signature:</strong> HMAC or RSA signature for verification</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>OAuth2 Flow (Authorization Code)</h3>
+                    <p>
+                        User → App redirects to Auth Server → User grants permission → 
+                        Auth Server returns code → App exchanges code for token → Token used for API calls
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Spring Security OAuth2 Setup</h3>
+                    <pre><code>@Bean
+public SecurityFilterChain filterChain(
+        HttpSecurity http) throws Exception {
+    http.oauth2Login()
+        .userInfoEndpoint()
+        .userService(userService);
+    return http.build();
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Token Validation</h3>
+                    <ul class="compact-list">
+                        <li>Verify signature with public key</li>
+                        <li>Check expiration time (exp claim)</li>
+                        <li>Validate issuer (iss claim)</li>
+                        <li>Validate audience (aud claim)</li>
+                        <li>Store in secure, httpOnly cookies (not localStorage)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- JPA & Hibernate Section -->
+        <section class="content-section">
+            <h2 class="section-title">JPA / Hibernate</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Entity Basics</h3>
+                    <pre><code>@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = 
+        GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Relationships</h3>
+                    <ul class="compact-list">
+                        <li><code>@OneToMany</code> - One entity to many related</li>
+                        <li><code>@ManyToOne</code> - Many entities to one</li>
+                        <li><code>@ManyToMany</code> - Many to many with join table</li>
+                        <li><code>@OneToOne</code> - One-to-one mapping</li>
+                        <li>Use <code>mappedBy</code> for bidirectional relations</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>JPA Repository</h3>
+                    <pre><code>public interface UserRepository
+    extends JpaRepository&lt;User, Long&gt; {
+    
+    List&lt;User&gt; findByEmail(String email);
+    
+    @Query("SELECT u FROM User u WHERE " +
+           "u.status = :status")
+    List&lt;User&gt; findActive(
+        @Param("status") String status);
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>JPA Buddy</h3>
+                    <p>
+                        IntelliJ plugin for JPA/Hibernate productivity. Auto-generates entity classes, 
+                        visualizes relationships, provides inspections for common issues, and simplifies 
+                        DDL migrations.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>N+1 Query Problem</h3>
+                    <p>
+                        Occurs when fetching parent entities triggers individual queries for each child. 
+                        Solution: Use <code>@Fetch(FetchMode.JOIN)</code>, eager loading, or 
+                        <code>@Query</code> with JOIN FETCH.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Best Practices</h3>
+                    <ul class="compact-list">
+                        <li>Use DTOs for API responses, not entities</li>
+                        <li>Lazy load by default, eager load explicitly</li>
+                        <li>Index frequently queried columns</li>
+                        <li>Use transactions for data consistency</li>
+                        <li>Consider soft deletes with @Where annotation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Swagger & OpenAPI Section -->
+        <section class="content-section">
+            <h2 class="section-title">Swagger / OpenAPI</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Springdoc Setup</h3>
+                    <pre><code>// pom.xml
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
+    &lt;artifactId&gt;
+        springdoc-openapi-starter-
+        webmvc-ui
+    &lt;/artifactId&gt;
+    &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Documenting Endpoints</h3>
+                    <pre><code>@GetMapping("/users/{id}")
+@Operation(
+    summary = "Get user by ID",
+    description = "Retrieve user details")
+@ApiResponse(
+    responseCode = "200",
+    description = "User found")
+public UserDTO getUserById(
+    @PathVariable Long id) {
+    // implementation
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>OpenAPI Configuration</h3>
+                    <pre><code>@Configuration
+public class OpenApiConfig {
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
+                .title("My API")
+                .version("1.0.0"));
+    }
+}</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Benefits</h3>
+                    <ul class="compact-list">
+                        <li>Auto-generates interactive API docs</li>
+                        <li>Live test endpoints from UI</li>
+                        <li>Generates client SDKs</li>
+                        <li>Documents request/response schemas</li>
+                        <li>Standard format for API contracts</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 SANDESH KHATIWADA. Spring Boot Knowledge Base.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

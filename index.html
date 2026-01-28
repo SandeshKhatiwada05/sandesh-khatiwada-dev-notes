@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANDESH KHATIWADA - Backend & Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">SK</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="spring.html" class="nav-link">Spring Boot</a></li>
+                <li><a href="n8n.html" class="nav-link">n8n</a></li>
+            </ul>
+            <div class="nav-external-links">
+                <a href="https://github.com/SandeshKhatiwada05" target="_blank" class="external-link github-icon">GitHub</a>
+                <button class="external-link" id="cv-trigger">📄 CV</button>
+                <div class="theme-menu">
+                    <button class="theme-toggle" id="theme-toggle">🌙</button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-option" data-theme="dark">🌙 Dark</button>
+                        <button class="theme-option" data-theme="light">☀️ Light</button>
+                        <button class="theme-option" data-theme="system">⚙️ System</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CV Modal -->
+    <div class="cv-modal" id="cv-modal">
+        <div class="cv-modal-content">
+            <div class="cv-modal-header">
+                <h2>SANDESH KHATIWADA - CV</h2>
+                <button class="cv-close-btn" id="cv-close">&times;</button>
+            </div>
+            <div class="cv-modal-body">
+                <iframe src="Sandesh_CV.pdf" type="application/pdf"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="header-title">SANDESH KHATIWADA</h1>
+            <p class="header-subtitle">Backend Development & Automation Engineering</p>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome</h2>
+                <p>
+                    This is a personal knowledge base focused on backend development, modern Java frameworks, 
+                    and automation engineering. Here you'll find curated technical notes, best practices, 
+                    and insights from real-world experience with Spring Boot, cloud infrastructure, and 
+                    low-code automation platforms.
+                </p>
+                <p>
+                    Navigate through the sections to explore deep dives into Spring Boot architecture, 
+                    security patterns, and n8n workflow automation techniques.
+                </p>
+            </div>
+        </section>
+
+        <!-- Quick Links -->
+        <section class="quick-links">
+            <h2>Quick Navigation</h2>
+            <div class="cards-grid">
+                <a href="spring.html" class="card-link">
+                    <div class="card">
+                        <h3>Spring Boot</h3>
+                        <p>Explore comprehensive notes on Spring Boot, security, and enterprise patterns.</p>
+                    </div>
+                </a>
+                <a href="n8n.html" class="card-link">
+                    <div class="card">
+                        <h3>n8n Automation</h3>
+                        <p>Discover workflow automation techniques and integration patterns.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 SANDESH KHATIWADA. Technical Knowledge Base. | <a href="https://github.com/SandeshKhatiwada05" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
