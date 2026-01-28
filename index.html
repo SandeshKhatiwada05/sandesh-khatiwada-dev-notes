@@ -4,107 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sandesh Khatiwada - Backend & Automation Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Technical portfolio of Sandesh Khatiwada - specialized in Spring Boot, n8n automation, and cloud solutions.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style-new.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- NAVBAR - MINIMAL HEADER -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">SK</div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="spring.html" class="nav-link">Spring Boot</a></li>
-                <li><a href="n8n.html" class="nav-link">n8n</a></li>
-                <li><a href="https://github.com/SandeshKhatiwada05" target="_blank" class="nav-link github-icon">GitHub</a></li>
-                <li><button class="nav-link" id="cv-trigger" style="background: none; border: none; cursor: pointer; padding: 0.5rem 0.75rem;">📄</button></li>
-                <li>
-                    <div class="theme-menu">
-                        <button class="theme-toggle" id="theme-toggle">🌙</button>
-                        <div class="theme-dropdown" id="theme-dropdown">
-                            <button class="theme-option" data-theme="dark">🌙 Dark</button>
-                            <button class="theme-option" data-theme="light">☀️ Light</button>
-                            <button class="theme-option" data-theme="system">⚙️ System</button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <div class="nav-controls">
+                <button id="theme-toggle-btn" class="nav-icon-btn" aria-label="Toggle theme">🌙</button>
+                <a href="https://github.com/SandeshKhatiwada05" target="_blank" class="nav-icon-btn" aria-label="GitHub">
+                    <span>🔗</span>
+                </a>
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- CV Modal -->
-    <div class="cv-modal" id="cv-modal">
-        <div class="cv-modal-content">
-            <div class="cv-modal-header">
-                <h2>Sandesh Khatiwada - CV</h2>
-                <div class="cv-search-bar">
-                    <input type="text" id="cv-search-input" class="cv-search-input" placeholder="Search CV content...">
-                </div>
-                <button class="cv-close-btn" id="cv-close">&times;</button>
+    <!-- SIDEBAR MENU -->
+    <aside class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="spring.html">Spring Boot</a></li>
+            <li><a href="n8n.html">n8n</a></li>
+            <li><a href="#" data-action="open-cv">CV</a></li>
+            <li><a href="#" data-action="open-notes">Notes</a></li>
+        </ul>
+    </aside>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- CV MODAL - FULL SCREEN -->
+    <div id="cv-modal" class="cv-modal">
+        <div class="cv-modal-header">
+            <h2>My Resume</h2>
+            <div class="cv-search-bar">
+                <input 
+                    type="text" 
+                    id="cv-search-input" 
+                    class="cv-search-input" 
+                    placeholder="Search CV..."
+                    aria-label="Search CV content"
+                >
             </div>
-            <div class="cv-modal-body">
-                <iframe src="Sandesh_CV.pdf" type="application/pdf" id="cv-iframe"></iframe>
-            </div>
+            <button class="cv-close-btn" aria-label="Close CV modal">✕</button>
+        </div>
+        <div class="cv-modal-body">
+            <iframe src="Sandesh_CV.pdf" title="My CV"></iframe>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT -->
     <main class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1 class="header-title">Backend & Automation Engineer</h1>
-            <p class="header-subtitle">Crafting scalable solutions with Spring Boot, cloud infrastructure, and workflow automation</p>
-        </header>
+        <!-- HEADER SECTION -->
+        <section class="header">
+            <h1 class="header-title">Sandesh Khatiwada</h1>
+            <p class="header-subtitle">Backend Engineer | Automation Specialist</p>
+        </section>
 
-        <!-- Hero Section -->
+        <!-- HERO SECTION -->
         <section class="hero">
             <div class="hero-content">
-                <h2>Welcome to My Technical Hub</h2>
-                <p>
-                    I'm Sandesh Khatiwada, a backend development and automation specialist. This platform serves as my personal knowledge base where I document best practices, architectural patterns, and technical insights gained from real-world projects.
-                </p>
-                <p>
-                    Explore in-depth guides on Spring Boot, cloud-native architectures, security patterns, and workflow automation with n8n. Whether you're deepening your backend expertise or exploring automation strategies, you'll find structured, practical content here.
-                </p>
+                <h2>Building scalable solutions with Spring Boot and n8n automation.</h2>
+                <p>Specialized in backend development, workflow automation, and cloud deployment.</p>
             </div>
         </section>
 
-        <!-- Search & Recommendations -->
+        <!-- SEARCH & RECOMMENDATIONS SECTION -->
         <section class="search-section">
-            <h2 style="margin-top: 0;">Quick Search & Recommendations</h2>
             <div class="search-box">
-                <input type="text" id="main-search" class="search-input" placeholder="Search topics, frameworks, patterns...">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="Search topics (Spring, n8n, API, Security, Database...)..."
+                    aria-label="Search recommendations"
+                >
             </div>
-            <div class="recommendations" id="recommendations">
-                <!-- Populated by JavaScript -->
-            </div>
+            <div class="recommendations" id="recommendations-grid"></div>
         </section>
 
-        <!-- Quick Links -->
+        <!-- QUICK LINKS SECTION -->
         <section class="quick-links">
-            <h2>Featured Topics</h2>
+            <h2>Explore My Work</h2>
             <div class="cards-grid">
                 <a href="spring.html" class="card-link">
                     <div class="card">
-                        <h3>Spring Boot Mastery</h3>
-                        <p>Comprehensive guide to building enterprise-grade Java applications with Spring Boot, from core concepts to advanced patterns.</p>
+                        <h3>Spring Boot Guide</h3>
+                        <p>Comprehensive guide to building enterprise Java applications with Spring Boot. Learn core concepts, best practices, and advanced patterns.</p>
+                        <p><strong>Topics:</strong> REST APIs, Security, JPA, OAuth2, Swagger</p>
                     </div>
                 </a>
+
                 <a href="n8n.html" class="card-link">
                     <div class="card">
                         <h3>n8n Automation</h3>
-                        <p>Master workflow automation and system integration techniques with n8n. Learn to build scalable, maintainable automations.</p>
+                        <p>Master workflow automation with n8n. Integrate APIs, build custom logic, and automate complex processes efficiently.</p>
+                        <p><strong>Topics:</strong> Workflows, Integrations, Custom Code, Patterns</p>
+                    </div>
+                </a>
+
+                <a href="#" data-action="open-cv" class="card-link">
+                    <div class="card">
+                        <h3>View My CV</h3>
+                        <p>Download or view my resume to see my experience, skills, and professional background.</p>
+                        <p><strong>Format:</strong> PDF with searchable content</p>
                     </div>
                 </a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
-        <p>&copy; 2026 Sandesh Khatiwada. Backend & Automation Knowledge Base. | <a href="https://github.com/SandeshKhatiwada05" target="_blank">GitHub</a></p>
+        <p>&copy; 2024 Sandesh Khatiwada. All rights reserved. | 
+            <a href="https://github.com/SandeshKhatiwada05" target="_blank">GitHub</a>
+        </p>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- Scripts -->
+    <script src="js/main-new.js"></script>
 </body>
 </html>
